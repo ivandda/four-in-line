@@ -1,4 +1,4 @@
-package fourInLine;
+package four.in.line;
 
 public class HorizontalOrVertical extends GameMode {
     public HorizontalOrVertical() {

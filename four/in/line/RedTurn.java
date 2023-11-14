@@ -1,21 +1,20 @@
-package fourInLine;
+package four.in.line;
 
-public class BlueTurn extends GameState {
-    public BlueTurn(Linea game) {
+public class RedTurn extends GameState {
+    public RedTurn(Linea game) {
         super(game);
     }
 
     @Override
     public void playRed(int column) {
-        throw new RuntimeException(redCantPlayMessage);
+        game.playPiece(column, Linea.redPiece);
+        game.setState(getNextState());
     }
 
     @Override
     public void playBlue(int column) {
-        game.playPiece(column, Linea.bluePiece);
-        game.setState(getNextState());
+        throw new RuntimeException(blueCantPlayMessage);
     }
-
 
     @Override
     public boolean isFinished() {
@@ -24,21 +23,21 @@ public class BlueTurn extends GameState {
 
     @Override
     public boolean isRedTurn() {
-        return false;
-    }
-
-    @Override
-    public boolean isBlueTurn() {
         return true;
     }
 
     @Override
+    public boolean isBlueTurn() {
+        return false;
+    }
+
+    @Override
     public boolean isNextTurn() {
-        return !game.isDraw() && !game.BlueWins() && !game.RedWins() && !game.isBlueTurn() && game.isRedTurn();
+        return !game.isDraw() && !game.BlueWins() && !game.RedWins() && !game.isRedTurn() && game.isBlueTurn();
     }
 
     @Override
     public String getCurrentState() {
-        return "Blue's turn";
+        return "Red's turn";
     }
 }

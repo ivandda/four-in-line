@@ -1,4 +1,4 @@
-package fourInLine;
+package four.in.line;
 
 import java.util.ArrayList;
 

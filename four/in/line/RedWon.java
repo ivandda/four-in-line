@@ -1,7 +1,7 @@
-package fourInLine;
+package four.in.line;
 
-public class BlueWon extends GameState{
-    public BlueWon(Linea game) {
+public class RedWon extends GameState {
+    public RedWon(Linea game) {
         super(game);
     }
 
@@ -32,11 +32,11 @@ public class BlueWon extends GameState{
 
     @Override
     public boolean isNextTurn() {
-        return game.BlueWins();
+        return game.RedWins();
     }
 
     @Override
     public String getCurrentState() {
-        return "Game ended: Blue won";
+        return "Game ended: Red won";
     }
 }
