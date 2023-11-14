@@ -1,4 +1,4 @@
-package four.in.line;
+package fourInLine;
 
 public class Draw extends GameState{
     public Draw(Linea game) {

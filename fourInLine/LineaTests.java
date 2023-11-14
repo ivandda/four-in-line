@@ -1,4 +1,4 @@
-package four.in.line;
+package fourInLine;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,8 +7,11 @@ import org.junit.jupiter.api.function.Executable;
 import java.util.stream.IntStream;
 
 
-import static four.in.line.Linea.message_cant_play_in_position;
-import static four.in.line.Linea.message_invalid_dimensions_for_board;
+import static fourInLine.GameMode.invalid_game_mode_choice;
+import static fourInLine.GameState.blueCantPlayMessage;
+import static fourInLine.GameState.redCantPlayMessage;
+import static fourInLine.Linea.message_cant_play_in_position;
+import static fourInLine.Linea.message_invalid_dimensions_for_board;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -60,7 +63,7 @@ public class LineaTests {
 
     @Test
     public void test03CannotInitializeGameWithInvalidGameMode() {
-        assertThrowsError(() -> new Linea(4, 4, 'D'), GameMode.invalid_game_mode_choice);
+        assertThrowsError(() -> new Linea(4, 4, 'D'), invalid_game_mode_choice);
     }
 
     @Test
@@ -80,7 +83,7 @@ public class LineaTests {
 
     @Test
     public void testBlueCantPlayInFirstRound() {
-        assertThrowsError(() -> game.playBlueAt(1), GameState.blueCantPlayMessage);
+        assertThrowsError(() -> game.playBlueAt(1), blueCantPlayMessage);
     }
 
     @Test
@@ -99,14 +102,14 @@ public class LineaTests {
     @Test
     void redCantPLayInBlueTurn() {
         game.playRedAt(1);
-        assertThrowsError(() -> game.playRedAt(1), GameState.redCantPlayMessage);
+        assertThrowsError(() -> game.playRedAt(1), redCantPlayMessage);
     }
 
     @Test
     void blueCantPLayInRedTurn() {
         game.playRedAt(1);
         game.playBlueAt(1);
-        assertThrowsError(() -> game.playBlueAt(1), GameState.blueCantPlayMessage);
+        assertThrowsError(() -> game.playBlueAt(1), blueCantPlayMessage);
     }
 
     @Test
@@ -260,13 +263,13 @@ public class LineaTests {
     @Test
     public void cantPLayAfterAWin() {
         redPlaysHorizontalLine();
-        assertThrowsError(() -> game.playRedAt(3), GameState.redCantPlayMessage);
+        assertThrowsError(() -> game.playRedAt(3), redCantPlayMessage);
     }
 
     @Test
     public void cantPLayAfterAWin2() {
         bluePlaysHorizontalLine();
-        assertThrowsError(() -> game.playRedAt(3), GameState.redCantPlayMessage);
+        assertThrowsError(() -> game.playRedAt(3), redCantPlayMessage);
     }
 
     @Test

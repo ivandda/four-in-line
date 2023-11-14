@@ -1,4 +1,4 @@
-package four.in.line;
+package fourInLine;
 
 public class Diagonals extends GameMode {
     public Diagonals() {
