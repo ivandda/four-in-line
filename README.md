@@ -2,7 +2,7 @@
 ### [Rules](https://en.wikipedia.org/wiki/Connect_Four)
 
 
-### To Run:
+### To Run in terminal:
 
 ```
 sudo docker build -t four_in_line_game .
