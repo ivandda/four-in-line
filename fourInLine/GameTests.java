@@ -7,63 +7,63 @@ import org.junit.jupiter.api.function.Executable;
 import java.util.stream.IntStream;
 
 
-import static fourInLine.GameMode.invalid_game_mode_choice;
-import static fourInLine.GameState.blueCantPlayMessage;
-import static fourInLine.GameState.redCantPlayMessage;
-import static fourInLine.Linea.message_cant_play_in_position;
-import static fourInLine.Linea.message_invalid_dimensions_for_board;
+import static fourInLine.gameMode.GameMode.invalid_game_mode_choice;
+import static fourInLine.gameState.GameState.blueCantPlayMessage;
+import static fourInLine.gameState.GameState.redCantPlayMessage;
+import static fourInLine.Line.message_cant_play_in_position;
+import static fourInLine.Line.message_invalid_dimensions_for_board;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class LineaTests {
-    private Linea game;
+public class GameTests {
+    private Line game;
 
     @BeforeEach
     public void setUp() {
-        game = new Linea(4, 4, 'A');
+        game = new Line(4, 4, 'A');
     }
 
     @Test
     public void test01CreationOfDifferentBoardDimensions1() {
-        Linea game = new Linea(1, 2, 'A');
+        Line game = new Line(1, 2, 'A');
         assertEquals(1, game.getBase());
         assertEquals(2, game.getHeight());
     }
 
     @Test
     public void tes02tCreationOfDifferentBoardDimensions2() {
-        Linea game = new Linea(4, 5, 'A');
+        Line game = new Line(4, 5, 'A');
         assertEquals(4, game.getBase());
         assertEquals(5, game.getHeight());
     }
 
     @Test
     public void test03CreationOfDifferentBoardDimensions3() {
-        Linea game = new Linea(9,15, 'A');
+        Line game = new Line(9,15, 'A');
         assertEquals(9, game.getBase());
         assertEquals(15, game.getHeight());
     }
 
     @Test
     public void test04CreationOfDifferentBoardDimensions4() {
-        Linea game = new Linea(1,21, 'A');
+        Line game = new Line(1,21, 'A');
         assertEquals(1, game.getBase());
         assertEquals(21, game.getHeight());
     }
 
     @Test
     public void test06CannotInitializeBoardSmallerThan1x1() {
-        assertThrowsError(() -> new Linea(0, 0, 'A'), message_invalid_dimensions_for_board);
+        assertThrowsError(() -> new Line(0, 0, 'A'), message_invalid_dimensions_for_board);
     }
 
     @Test
     public void test02CannotInitializeBoardWithNegativeDimensions() {
-        assertThrowsError(() -> new Linea(-4, -4, 'A'), message_invalid_dimensions_for_board);
+        assertThrowsError(() -> new Line(-4, -4, 'A'), message_invalid_dimensions_for_board);
     }
 
     @Test
     public void test03CannotInitializeGameWithInvalidGameMode() {
-        assertThrowsError(() -> new Linea(4, 4, 'D'), invalid_game_mode_choice);
+        assertThrowsError(() -> new Line(4, 4, 'D'), invalid_game_mode_choice);
     }
 
     @Test
@@ -280,7 +280,7 @@ public class LineaTests {
 
     @Test
     public void cantPlayAfterADraw() {
-        Linea game = new Linea(2, 2, 'A');
+        Line game = new Line(2, 2, 'A');
         game.playRedAt(1);
         game.playBlueAt(1);
         game.playRedAt(2);
@@ -688,7 +688,7 @@ public class LineaTests {
         playLinea(2, 1, 3, 2, 3, 3, 4, 4, 4, 4);
     }
 
-    private Linea playLinea(int... moves) {
+    private Line playLinea(int... moves) {
         for (int i = 0; i < moves.length; i += 2) {
             game.playRedAt(moves[i]);
             if (i + 1 == moves.length) break;
@@ -702,11 +702,11 @@ public class LineaTests {
         assertEquals(expectedError, actualError);
     }
 
-    private Linea newLineaB() {
-        return new Linea(4, 4, 'B');
+    private Line newLineaB() {
+        return new Line(4, 4, 'B');
     }
 
-    private Linea newLineaC() {
-        return new Linea(4, 4, 'C');
+    private Line newLineaC() {
+        return new Line(4, 4, 'C');
     }
 }

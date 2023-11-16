@@ -1,7 +1,9 @@
-package fourInLine;
+package fourInLine.gameState;
 
-public class Draw extends GameState{
-    public Draw(Linea game) {
+import fourInLine.Line;
+
+public class BlueTurn extends GameState {
+    public BlueTurn(Line game) {
         super(game);
     }
 
@@ -12,13 +14,14 @@ public class Draw extends GameState{
 
     @Override
     public void playBlue(int column) {
-        throw new RuntimeException(blueCantPlayMessage);
+        game.playPiece(column, Line.getBluePiece());
+        game.setState(getNextState());
     }
 
 
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 
     @Override
@@ -28,17 +31,16 @@ public class Draw extends GameState{
 
     @Override
     public boolean isBlueTurn() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isNextTurn() {
-        return game.isDraw();
-//        return !game.isDraw() && !game.BlueWins() && !game.RedWins()
+        return !game.isDraw() && !game.BlueWins() && !game.RedWins() && !game.isBlueTurn() && game.isRedTurn();
     }
 
     @Override
     public String getCurrentState() {
-        return "Game ended: Draw";
+        return "Blue's turn";
     }
 }

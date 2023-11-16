@@ -1,11 +1,13 @@
-package fourInLine;
+package fourInLine.gameState;
+
+import fourInLine.Line;
 
 import java.util.ArrayList;
 
 public abstract class GameState {
-    static Linea game;
+    static Line game;
 
-    public GameState(Linea game) {
+    public GameState(Line game) {
         this.game = game;
     }
 
@@ -16,8 +18,8 @@ public abstract class GameState {
             new BlueWon(game),
             new Draw(game)
     ));
-    protected static String blueCantPlayMessage = "Blue cant play in this round";
-    protected static String redCantPlayMessage = "Red cant play in this round";
+    public static String blueCantPlayMessage = "Blue cant play in this round";
+    public static String redCantPlayMessage = "Red cant play in this round";
 
     public abstract void playRed(int column);
 

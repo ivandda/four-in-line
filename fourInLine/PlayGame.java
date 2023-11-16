@@ -1,12 +1,12 @@
 package fourInLine;
 
-public class Game {
+public class PlayGame {
 
     public static void main(String[] args) throws Exception {
 
         System.out.println("Dimensiones?");
 
-        Linea game = new Linea(promptAsInt("Base? "),
+        Line game = new Line(promptAsInt("Base? "),
                 promptAsInt("Altura? "),
                 promptAsChar("Estartegia de Juego: A, B o C? "));
 

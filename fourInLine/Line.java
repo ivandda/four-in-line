@@ -1,13 +1,17 @@
 package fourInLine;
 
+import fourInLine.gameMode.GameMode;
+import fourInLine.gameState.GameState;
+import fourInLine.gameState.RedTurn;
+
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
-public class Linea {
+public class Line {
     protected static final String message_invalid_dimensions_for_board = "Invalid dimensions for board";
     protected static final String message_cant_play_in_position = "Can't play in that position";
-    static final char redPiece = 'R';
-    static final char bluePiece = 'B';
+    private static char redPiece = 'R';
+    private static char bluePiece = 'B';
     private static final char emptyPiece = ' ';
     ArrayList<ArrayList<Character>> board = new ArrayList<>();
     private int base;
@@ -15,7 +19,7 @@ public class Linea {
     private GameState gameState;
     private GameMode gameMode;
 
-    public Linea(int base, int height, char gameModeIdentifier) {
+    public Line(int base, int height, char gameModeIdentifier) {
         if (base <= 0 || height <= 0) {
             throw new IllegalArgumentException(message_invalid_dimensions_for_board);
         }
@@ -108,7 +112,7 @@ public class Linea {
     }
 
     public String show() {
-        return LineaBoardRenderer.render(this);
+        return GameBoardRenderer.render(this);
     }
 
     public boolean isRedTurn() {
@@ -146,5 +150,13 @@ public class Linea {
 
     public String getCurrentState() {
         return gameState.getCurrentState();
+    }
+
+    public static char getRedPiece() {
+        return redPiece;
+    }
+
+    public static char getBluePiece() {
+        return bluePiece;
     }
 }
