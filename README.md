@@ -7,11 +7,11 @@ https://en.wikipedia.org/wiki/Connect_Four
 ### To Run:
 
 ```
-docker build -t four_in_line_game .
+sudo docker build -t four_in_line_game .
 ```
 
 ```
-docker run -it four_in_line_game
+sudo docker run -it four_in_line_game
 ```
 ### Game Settings:
 - Base: base of the board
