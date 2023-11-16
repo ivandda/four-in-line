@@ -10,14 +10,14 @@ import java.util.stream.IntStream;
 public class Game {
     protected static final String message_invalid_dimensions_for_board = "Invalid dimensions for board";
     protected static final String message_cant_play_in_position = "Can't play in that position";
-    private static char redPiece = 'R';
-    private static char bluePiece = 'B';
+    private static final char redPiece = 'R';
+    private static final char bluePiece = 'B';
     private static final char emptyPiece = ' ';
     ArrayList<ArrayList<Character>> board = new ArrayList<>();
-    private int base;
-    private int height;
+    private final int base;
+    private final int height;
     private GameState gameState;
-    private GameMode gameMode;
+    private final GameMode gameMode;
 
     public Game(int base, int height, char gameModeIdentifier) {
         if (base <= 0 || height <= 0) {

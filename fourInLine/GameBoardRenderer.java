@@ -8,14 +8,11 @@ public class GameBoardRenderer {
     private static final char CROSS = '╬';
 
     public static String render(Game game) {
-        StringBuilder boardString = new StringBuilder();
 
-        boardString.append(game.getCurrentState()).append("\n\n");
-        boardString.append(generateRowHeader(game));
-        boardString.append(generateBoardRepresentation(game));
-        boardString.append(generateColumnNumbers(game));
-
-        return boardString.toString();
+        return game.getCurrentState() + "\n\n" +
+                generateRowHeader(game) +
+                generateBoardRepresentation(game) +
+                generateColumnNumbers(game);
     }
 
     private static String generateRowHeader(Game game) {

@@ -18,13 +18,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GameTests {
     private Game game;
 
-    private Game playLinea(int... moves) {
+    private void playLinea(int... moves) {
         for (int i = 0; i < moves.length; i += 2) {
             game.playRedAt(moves[i]);
             if (i + 1 == moves.length) break;
             game.playBlueAt(moves[i + 1]);
         }
-        return game;
     }
 
     private void assertThrowsError(Executable runnable, String expectedError) {

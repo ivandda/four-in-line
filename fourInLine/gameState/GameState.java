@@ -8,10 +8,10 @@ public abstract class GameState {
     static Game game;
 
     public GameState(Game game) {
-        this.game = game;
+        GameState.game = game;
     }
 
-    private static ArrayList<GameState> possibleGameStates = new ArrayList<>(java.util.Arrays.asList(
+    private static final ArrayList<GameState> possibleGameStates = new ArrayList<>(java.util.Arrays.asList(
             new RedTurn(game),
             new BlueTurn(game),
             new RedWon(game),

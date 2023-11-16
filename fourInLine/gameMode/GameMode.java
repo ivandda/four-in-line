@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public abstract class GameMode {
     public static final String invalid_game_mode_choice = "Invalid game mode reference";
-    private static ArrayList<GameMode> possibleGameModes = new ArrayList<>(java.util.Arrays.asList(
+    private static final ArrayList<GameMode> possibleGameModes = new ArrayList<>(java.util.Arrays.asList(
             new HorizontalOrVertical(),
             new Diagonals(),
             new HorizontalOrVerticalOrDiagonal()
