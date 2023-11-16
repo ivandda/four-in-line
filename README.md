@@ -1,8 +1,6 @@
 # Four in line game
-### Rules:
-```
-https://en.wikipedia.org/wiki/Connect_Four
-```
+### [Rules](https://en.wikipedia.org/wiki/Connect_Four)
+
 
 ### To Run:
 
