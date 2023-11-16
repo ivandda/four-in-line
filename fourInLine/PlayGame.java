@@ -4,20 +4,20 @@ public class PlayGame {
 
     public static void main(String[] args) throws Exception {
 
-        System.out.println("Dimensiones?");
+        System.out.println("Dimensions?");
 
         Game game = new Game(promptAsInt("Base? "),
-                promptAsInt("Altura? "),
-                promptAsChar("Estartegia de Juego: A, B o C? "));
+                promptAsInt("Height? "),
+                promptAsChar("Game Mode: A, B o C? "));
 
         System.out.println(game.show());
 
         while (!game.finished()) {
-            game.playRedAt(promptAsInt("Rojas? "));
+            game.playRedAt(promptAsInt("Red? "));
             System.out.println(game.show());
 
             if (!game.finished()) {
-                game.playBlueAt(promptAsInt("Azul? "));
+                game.playBlueAt(promptAsInt("Blue? "));
                 System.out.println(game.show());
             }
         }
