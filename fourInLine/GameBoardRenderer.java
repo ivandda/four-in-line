@@ -7,25 +7,25 @@ public class GameBoardRenderer {
     private static final char VERTICAL_LINE = '║';
     private static final char CROSS = '╬';
 
-    public static String render(Line line) {
+    public static String render(Game game) {
         StringBuilder boardString = new StringBuilder();
 
-        boardString.append(line.getCurrentState()).append("\n\n");
-        boardString.append(generateRowHeader(line));
-        boardString.append(generateBoardRepresentation(line));
-        boardString.append(generateColumnNumbers(line));
+        boardString.append(game.getCurrentState()).append("\n\n");
+        boardString.append(generateRowHeader(game));
+        boardString.append(generateBoardRepresentation(game));
+        boardString.append(generateColumnNumbers(game));
 
         return boardString.toString();
     }
 
-    private static String generateRowHeader(Line line) {
-        String heightStr = String.valueOf(line.getHeight());
+    private static String generateRowHeader(Game game) {
+        String heightStr = String.valueOf(game.getHeight());
         StringBuilder rowHeaderBuilder = new StringBuilder();
 
         rowHeaderBuilder.append(" ".repeat(heightStr.length() + 1));
         rowHeaderBuilder.append(CROSS);
 
-        IntStream.range(0, line.getBase()).forEach(column -> {
+        IntStream.range(0, game.getBase()).forEach(column -> {
             rowHeaderBuilder.append(HORIZONTAL_LINE).append(HORIZONTAL_LINE).append(HORIZONTAL_LINE);
             rowHeaderBuilder.append(CROSS);
         });
@@ -34,21 +34,21 @@ public class GameBoardRenderer {
         return rowHeaderBuilder.toString();
     }
 
-    private static String generateBoardRepresentation(Line line) {
+    private static String generateBoardRepresentation(Game game) {
         StringBuilder rowBuilder = new StringBuilder();
-        String heightStr = String.valueOf(line.getHeight());
+        String heightStr = String.valueOf(game.getHeight());
 
-        IntStream.range(0, line.getHeight()).forEach(row -> {
-            int rowNumber = line.getHeight() - row;
+        IntStream.range(0, game.getHeight()).forEach(row -> {
+            int rowNumber = game.getHeight() - row;
             rowBuilder.append(rowNumber).append(" ".repeat(heightStr.length() - String.valueOf(rowNumber).length() + 1)).append(VERTICAL_LINE);
-            IntStream.range(0, line.getBase()).forEach(column -> {
-                rowBuilder.append(" ").append(line.getPiece(column, rowNumber - 1)).append(" ");
+            IntStream.range(0, game.getBase()).forEach(column -> {
+                rowBuilder.append(" ").append(game.getPiece(column, rowNumber - 1)).append(" ");
                 rowBuilder.append(VERTICAL_LINE);
             });
             rowBuilder.append("\n");
 
             rowBuilder.append(" ").append(" ".repeat(heightStr.length())).append(CROSS);
-            IntStream.range(0, line.getBase()).forEach(column -> {
+            IntStream.range(0, game.getBase()).forEach(column -> {
                 rowBuilder.append(HORIZONTAL_LINE).append(HORIZONTAL_LINE).append(HORIZONTAL_LINE);
                 rowBuilder.append(CROSS);
             });
@@ -58,12 +58,12 @@ public class GameBoardRenderer {
         return rowBuilder.toString();
     }
 
-    private static String generateColumnNumbers(Line line) {
+    private static String generateColumnNumbers(Game game) {
         StringBuilder rowFooterBuilder = new StringBuilder();
-        String heightStr = String.valueOf(line.getHeight());
+        String heightStr = String.valueOf(game.getHeight());
 
         rowFooterBuilder.append(" ".repeat(heightStr.length()));
-        IntStream.range(0, line.getBase()).forEach(column -> {
+        IntStream.range(0, game.getBase()).forEach(column -> {
             rowFooterBuilder.append(" ".repeat(4 - String.valueOf(column + 1).length()));
             rowFooterBuilder.append(column + 1);
         });

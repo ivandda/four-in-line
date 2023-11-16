@@ -1,9 +1,9 @@
 package fourInLine.gameState;
 
-import fourInLine.Line;
+import fourInLine.Game;
 
 public class BlueTurn extends GameState {
-    public BlueTurn(Line game) {
+    public BlueTurn(Game game) {
         super(game);
     }
 
@@ -14,7 +14,7 @@ public class BlueTurn extends GameState {
 
     @Override
     public void playBlue(int column) {
-        game.playPiece(column, Line.getBluePiece());
+        game.playPiece(column, Game.getBluePiece());
         game.setState(getNextState());
     }
 

@@ -1,9 +1,9 @@
 package fourInLine.gameState;
 
-import fourInLine.Line;
+import fourInLine.Game;
 
 public class RedWon extends GameState {
-    public RedWon(Line game) {
+    public RedWon(Game game) {
         super(game);
     }
 

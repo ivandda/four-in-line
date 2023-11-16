@@ -1,6 +1,6 @@
 package fourInLine.gameMode;
 
-import fourInLine.Line;
+import fourInLine.Game;
 
 import java.util.ArrayList;
 
@@ -24,5 +24,5 @@ public abstract class GameMode {
         return identifier == gameModeIdentifier;
     }
 
-    public abstract boolean checkWin(Line line, char bluePiece);
+    public abstract boolean checkWin(Game game, char bluePiece);
 }

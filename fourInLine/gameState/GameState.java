@@ -1,13 +1,13 @@
 package fourInLine.gameState;
 
-import fourInLine.Line;
+import fourInLine.Game;
 
 import java.util.ArrayList;
 
 public abstract class GameState {
-    static Line game;
+    static Game game;
 
-    public GameState(Line game) {
+    public GameState(Game game) {
         this.game = game;
     }
 

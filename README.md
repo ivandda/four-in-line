@@ -1,1 +1,1 @@
-# Four in line
+# Four in game

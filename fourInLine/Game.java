@@ -7,7 +7,7 @@ import fourInLine.gameState.RedTurn;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
-public class Line {
+public class Game {
     protected static final String message_invalid_dimensions_for_board = "Invalid dimensions for board";
     protected static final String message_cant_play_in_position = "Can't play in that position";
     private static char redPiece = 'R';
@@ -19,7 +19,7 @@ public class Line {
     private GameState gameState;
     private GameMode gameMode;
 
-    public Line(int base, int height, char gameModeIdentifier) {
+    public Game(int base, int height, char gameModeIdentifier) {
         if (base <= 0 || height <= 0) {
             throw new IllegalArgumentException(message_invalid_dimensions_for_board);
         }
@@ -115,6 +115,11 @@ public class Line {
         return GameBoardRenderer.render(this);
     }
 
+    public boolean boardIsFull() {
+        return IntStream.range(0, base)
+                .allMatch(i -> board.get(i).size() == height);
+    }
+
     public boolean isRedTurn() {
         return gameState.isRedTurn();
     }
@@ -133,11 +138,6 @@ public class Line {
 
     public boolean isDraw() {
         return boardIsFull() && !BlueWins() && !RedWins();
-    }
-
-    public boolean boardIsFull() {
-        return IntStream.range(0, base)
-                .allMatch(i -> board.get(i).size() == height);
     }
 
     public int getBase() {

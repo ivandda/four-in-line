@@ -6,7 +6,7 @@ public class PlayGame {
 
         System.out.println("Dimensiones?");
 
-        Line game = new Line(promptAsInt("Base? "),
+        Game game = new Game(promptAsInt("Base? "),
                 promptAsInt("Altura? "),
                 promptAsChar("Estartegia de Juego: A, B o C? "));
 

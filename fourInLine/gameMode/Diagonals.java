@@ -1,6 +1,6 @@
 package fourInLine.gameMode;
 
-import fourInLine.Line;
+import fourInLine.Game;
 
 public class Diagonals extends GameMode {
     public Diagonals() {
@@ -8,7 +8,7 @@ public class Diagonals extends GameMode {
     }
 
     @Override
-    public boolean checkWin(Line line, char pieceType) {
-        return line.checkDiagonalWin(pieceType);
+    public boolean checkWin(Game game, char pieceType) {
+        return game.checkDiagonalWin(pieceType);
     }
 }

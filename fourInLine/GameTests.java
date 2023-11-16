@@ -10,64 +10,88 @@ import java.util.stream.IntStream;
 import static fourInLine.gameMode.GameMode.invalid_game_mode_choice;
 import static fourInLine.gameState.GameState.blueCantPlayMessage;
 import static fourInLine.gameState.GameState.redCantPlayMessage;
-import static fourInLine.Line.message_cant_play_in_position;
-import static fourInLine.Line.message_invalid_dimensions_for_board;
+import static fourInLine.Game.message_cant_play_in_position;
+import static fourInLine.Game.message_invalid_dimensions_for_board;
 import static org.junit.jupiter.api.Assertions.*;
 
 
 public class GameTests {
-    private Line game;
+    private Game game;
+
+    private Game playLinea(int... moves) {
+        for (int i = 0; i < moves.length; i += 2) {
+            game.playRedAt(moves[i]);
+            if (i + 1 == moves.length) break;
+            game.playBlueAt(moves[i + 1]);
+        }
+        return game;
+    }
+
+    private void assertThrowsError(Executable runnable, String expectedError) {
+        String actualError = assertThrows(RuntimeException.class, runnable, "Expected Error was not thrown.").getMessage();
+        assertEquals(expectedError, actualError);
+    }
+
+    private Game newLineaB() {
+        return new Game(4, 4, 'B');
+    }
+
+    private Game newLineaC() {
+        return new Game(4, 4, 'C');
+    }
+
+
 
     @BeforeEach
     public void setUp() {
-        game = new Line(4, 4, 'A');
+        game = new Game(4, 4, 'A');
     }
 
     @Test
-    public void test01CreationOfDifferentBoardDimensions1() {
-        Line game = new Line(1, 2, 'A');
+    public void CreationOfDifferentBoardDimensions1() {
+        Game game = new Game(1, 2, 'A');
         assertEquals(1, game.getBase());
         assertEquals(2, game.getHeight());
     }
 
     @Test
-    public void tes02tCreationOfDifferentBoardDimensions2() {
-        Line game = new Line(4, 5, 'A');
+    public void CreationOfDifferentBoardDimensions2() {
+        Game game = new Game(4, 5, 'A');
         assertEquals(4, game.getBase());
         assertEquals(5, game.getHeight());
     }
 
     @Test
-    public void test03CreationOfDifferentBoardDimensions3() {
-        Line game = new Line(9,15, 'A');
+    public void CreationOfDifferentBoardDimensions3() {
+        Game game = new Game(9, 15, 'A');
         assertEquals(9, game.getBase());
         assertEquals(15, game.getHeight());
     }
 
     @Test
-    public void test04CreationOfDifferentBoardDimensions4() {
-        Line game = new Line(1,21, 'A');
+    public void CreationOfDifferentBoardDimensions4() {
+        Game game = new Game(1, 21, 'A');
         assertEquals(1, game.getBase());
         assertEquals(21, game.getHeight());
     }
 
     @Test
-    public void test06CannotInitializeBoardSmallerThan1x1() {
-        assertThrowsError(() -> new Line(0, 0, 'A'), message_invalid_dimensions_for_board);
+    public void CannotInitializeBoardSmallerThan1x1() {
+        assertThrowsError(() -> new Game(0, 0, 'A'), message_invalid_dimensions_for_board);
     }
 
     @Test
-    public void test02CannotInitializeBoardWithNegativeDimensions() {
-        assertThrowsError(() -> new Line(-4, -4, 'A'), message_invalid_dimensions_for_board);
+    public void CannotInitializeBoardWithNegativeDimensions() {
+        assertThrowsError(() -> new Game(-4, -4, 'A'), message_invalid_dimensions_for_board);
     }
 
     @Test
-    public void test03CannotInitializeGameWithInvalidGameMode() {
-        assertThrowsError(() -> new Line(4, 4, 'D'), invalid_game_mode_choice);
+    public void CannotInitializeGameWithInvalidGameMode() {
+        assertThrowsError(() -> new Game(4, 4, 'D'), invalid_game_mode_choice);
     }
 
     @Test
-    public void test04GameIsInitializedCorrectly() {
+    public void GameIsInitializedCorrectly() {
         IntStream.range(0, 4).forEach(column -> {
             IntStream.range(0, 4).forEach(row -> {
                 assertEquals(' ', game.getPiece(column, row));
@@ -77,12 +101,12 @@ public class GameTests {
 
 
     @Test
-    public void test04RedStartsGame() {
+    public void RedStartsGame() {
         assertTrue(game.isRedTurn());
     }
 
     @Test
-    public void testBlueCantPlayInFirstRound() {
+    public void BlueCantPlayInFirstRound() {
         assertThrowsError(() -> game.playBlueAt(1), blueCantPlayMessage);
     }
 
@@ -113,12 +137,12 @@ public class GameTests {
     }
 
     @Test
-    public void test05CannotPlayOutsideBoard() {
+    public void CannotPlayOutsideBoard() {
         assertThrowsError(() -> game.playRedAt(5), message_cant_play_in_position);
     }
 
     @Test
-    public void test06CannotPlayInColumn0() {
+    public void CannotPlayInColumn0() {
         assertThrowsError(() -> game.playRedAt(0), message_cant_play_in_position);
     }
 
@@ -129,7 +153,7 @@ public class GameTests {
     }
 
     @Test
-    public void test07PrintsEmptyBoard() {
+    public void PrintsEmptyBoard() {
         String boardRenderExpected = """
                 Red's turn
                             
@@ -148,7 +172,7 @@ public class GameTests {
     }
 
     @Test
-    public void test08PrintsRedPieces() {
+    public void PrintsRedPieces() {
         game.playRedAt(2);
         String boardRenderExpected = """
                 Blue's turn
@@ -168,7 +192,7 @@ public class GameTests {
     }
 
     @Test
-    public void test09PrintsBluePieces() {
+    public void PrintsBluePieces() {
         game.playRedAt(2);
         game.playBlueAt(2);
         String boardRenderExpected = """
@@ -189,7 +213,7 @@ public class GameTests {
     }
 
     @Test
-    public void test10PrintsRedAndBluePieces() {
+    public void PrintsRedAndBluePieces() {
         playLinea(2, 2, 3, 3);
         String boardRenderExpected = """
                 Red's turn
@@ -209,7 +233,7 @@ public class GameTests {
     }
 
     @Test
-    public void test11AlternateTurnsAndPlacePieces() {
+    public void AlternateTurnsAndPlacePieces() {
         playLinea(2, 2, 3, 3, 2, 2, 3, 3);
         String boardRenderExpected = """
                 Red's turn
@@ -229,13 +253,13 @@ public class GameTests {
     }
 
     @Test
-    public void test12CannotPlayInFullColumn() {
+    public void CannotPlayInFullColumn() {
         playLinea(2, 2, 2, 2);
         assertThrowsError(() -> game.playRedAt(2), message_cant_play_in_position);
     }
 
     @Test
-    public void test13PiecesArePositionedAtTheLowestAvailablePosition() {
+    public void PiecesArePositionedAtTheLowestAvailablePosition() {
         playLinea(1, 2, 3, 4, 4, 3, 2, 1);
         String boardRenderExpected = """
                 Red's turn
@@ -255,7 +279,7 @@ public class GameTests {
     }
 
     @Test
-    public void test14RedWinsWithHorizontalLineModeA() {
+    public void RedWinsWithHorizontalLineModeA() {
         redPlaysHorizontalLine();
         assertEquals(redHasHorizontalLineWins(), game.show());
     }
@@ -273,14 +297,14 @@ public class GameTests {
     }
 
     @Test
-    public void gameDraws(){
+    public void gameDraws() {
         playLinea(1, 2, 3, 4, 1, 3, 2, 2, 1, 1, 4, 3, 2, 4, 3, 4);
         assertTrue(game.isDraw());
     }
 
     @Test
     public void cantPlayAfterADraw() {
-        Line game = new Line(2, 2, 'A');
+        Game game = new Game(2, 2, 'A');
         game.playRedAt(1);
         game.playBlueAt(1);
         game.playRedAt(2);
@@ -289,114 +313,114 @@ public class GameTests {
     }
 
     @Test
-    public void test15BlueWinsWithHorizontalLineModeA() {
+    public void BlueWinsWithHorizontalLineModeA() {
         bluePlaysHorizontalLine();
         assertEquals(blueHasHorizontalLineWins(), game.show());
     }
 
     @Test
-    public void test16RedWinsWithVerticalLineModeA() {
+    public void RedWinsWithVerticalLineModeA() {
         redPlaysVerticalLine();
         assertEquals(redHasVerticalLineWins(), game.show());
     }
 
     @Test
-    public void test17BlueWinsWithVerticalLineModeA() {
+    public void BlueWinsWithVerticalLineModeA() {
         bluePlaysVerticalLine();
         assertEquals(blueHasVerticalLineWins(), game.show());
     }
 
     @Test
-    public void test18RedDoesntWinWithDiagonalLineModeA() {
+    public void RedDoesntWinWithDiagonalLineModeA() {
         redPlaysDiagonalLine();
         assertEquals(redHasDiagonalLineNotWins(), game.show());
     }
 
     @Test
-    public void test19BlueDoesntWinWithDiagonalLineModeA() {
+    public void BlueDoesntWinWithDiagonalLineModeA() {
         bluePlaysDiagonalLine();
         assertEquals(blueHasDiagonalLineNotWins(), game.show());
     }
 
     @Test
-    public void test20RedDoesntWinWithHorizontalLineModeB() {
+    public void RedDoesntWinWithHorizontalLineModeB() {
         game = newLineaB();
         redPlaysHorizontalLine();
         assertEquals(redHasHorizontalLineNotWins(), game.show());
     }
 
     @Test
-    public void test21BlueDoesntWinWithHorizontalLineModeB() {
+    public void BlueDoesntWinWithHorizontalLineModeB() {
         game = newLineaB();
         bluePlaysHorizontalLine();
         assertEquals(blueHasHorizontalLineNotWins(), game.show());
     }
 
     @Test
-    public void test22RedDoesntWinWithVerticalLineModeB() {
+    public void RedDoesntWinWithVerticalLineModeB() {
         game = newLineaB();
         redPlaysVerticalLine();
         assertEquals(redHasVerticalLineNotWins(), game.show());
     }
 
     @Test
-    public void test23BlueDoesntWinWithVerticalLineModeB() {
+    public void BlueDoesntWinWithVerticalLineModeB() {
         game = newLineaB();
         bluePlaysVerticalLine();
         assertEquals(blueHasVerticalLineNotWins(), game.show());
     }
 
     @Test
-    public void test24RedWinsWithDiagonalLineModeB() {
+    public void RedWinsWithDiagonalLineModeB() {
         game = newLineaB();
         redPlaysDiagonalLine();
         assertEquals(redHasDiagonalLineWins(), game.show());
     }
 
     @Test
-    public void test25BlueWinsWithDiagonalLineModeB() {
+    public void BlueWinsWithDiagonalLineModeB() {
         game = newLineaB();
         bluePlaysDiagonalLine();
         assertEquals(blueHasDiagonalLineWins(), game.show());
     }
 
     @Test
-    public void test26RedWinsWithHorizontalLineModeC() {
+    public void RedWinsWithHorizontalLineModeC() {
         game = newLineaC();
         redPlaysHorizontalLine();
         assertEquals(redHasHorizontalLineWins(), game.show());
     }
 
     @Test
-    public void test27BlueWinsWithHorizontalLineModeC() {
+    public void BlueWinsWithHorizontalLineModeC() {
         game = newLineaC();
         bluePlaysHorizontalLine();
         assertEquals(blueHasHorizontalLineWins(), game.show());
     }
 
     @Test
-    public void test28RedWinsWithVerticalLineModeC() {
+    public void RedWinsWithVerticalLineModeC() {
         game = newLineaC();
         redPlaysVerticalLine();
         assertEquals(redHasVerticalLineWins(), game.show());
     }
 
     @Test
-    public void test29BlueWinsWithVerticalLineModeC() {
+    public void BlueWinsWithVerticalLineModeC() {
         game = newLineaC();
         bluePlaysVerticalLine();
         assertEquals(blueHasVerticalLineWins(), game.show());
     }
 
     @Test
-    public void test30RedWinsWithDiagonalLineModeC() {
+    public void RedWinsWithDiagonalLineModeC() {
         game = newLineaC();
         redPlaysDiagonalLine();
         assertEquals(redHasDiagonalLineWins(), game.show());
     }
 
     @Test
-    public void test31BlueWinsWithDiagonalLineModeC() {
+    public void BlueWinsWithDiagonalLineModeC() {
         game = newLineaC();
         bluePlaysDiagonalLine();
         assertEquals(blueHasDiagonalLineWins(), game.show());
@@ -404,7 +428,7 @@ public class GameTests {
 
 
     @Test
-    public void test32BlueHasDiagonalLineInverted() {
+    public void BlueHasDiagonalLineInverted() {
         game = newLineaB();
         playLinea(1, 2, 3, 4, 1, 3, 2, 2, 1, 1);
         String boardRenderExpected = """
@@ -426,7 +450,7 @@ public class GameTests {
 
 
     @Test
-    public void test33GameEndsInADraw() {
+    public void GameEndsInADraw() {
         game = newLineaC();
         playLinea(1, 2, 1, 2, 2, 1, 2, 1, 3, 4, 3, 4, 4, 3, 4, 3);
         String boardRenderExpected = """
@@ -447,14 +471,14 @@ public class GameTests {
     }
 
     @Test
-    public void test34GameEndsWhenRedWins() {
+    public void GameEndsWhenRedWins() {
         game = newLineaB();
         redPlaysDiagonalLine();
         assertThrowsError(() -> game.playBlueAt(3), "Blue cant play in this round");
     }
 
     @Test
-    public void test35GameEndsWhenBlueWins() {
+    public void GameEndsWhenBlueWins() {
         game = newLineaB();
         bluePlaysDiagonalLine();
         assertThrowsError(() -> game.playRedAt(3), "Red cant play in this round");
@@ -688,25 +712,5 @@ public class GameTests {
         playLinea(2, 1, 3, 2, 3, 3, 4, 4, 4, 4);
     }
 
-    private Line playLinea(int... moves) {
-        for (int i = 0; i < moves.length; i += 2) {
-            game.playRedAt(moves[i]);
-            if (i + 1 == moves.length) break;
-            game.playBlueAt(moves[i + 1]);
-        }
-        return game;
-    }
 
-    private void assertThrowsError(Executable runnable, String expectedError) {
-        String actualError = assertThrows(RuntimeException.class, runnable, "Expected Error was not thrown.").getMessage();
-        assertEquals(expectedError, actualError);
-    }
-
-    private Line newLineaB() {
-        return new Line(4, 4, 'B');
-    }
-
-    private Line newLineaC() {
-        return new Line(4, 4, 'C');
-    }
 }

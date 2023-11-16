@@ -1,9 +1,9 @@
 package fourInLine.gameState;
 
-import fourInLine.Line;
+import fourInLine.Game;
 
 public class Draw extends GameState{
-    public Draw(Line game) {
+    public Draw(Game game) {
         super(game);
     }
 

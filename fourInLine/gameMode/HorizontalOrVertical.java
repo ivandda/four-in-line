@@ -1,6 +1,6 @@
 package fourInLine.gameMode;
 
-import fourInLine.Line;
+import fourInLine.Game;
 
 public class HorizontalOrVertical extends GameMode {
     public HorizontalOrVertical() {
@@ -8,7 +8,7 @@ public class HorizontalOrVertical extends GameMode {
     }
 
     @Override
-    public boolean checkWin(Line line, char pieceType) {
-        return line.checkVerticalWin(pieceType) || line.checkHorizontalWin(pieceType);
+    public boolean checkWin(Game game, char pieceType) {
+        return game.checkVerticalWin(pieceType) || game.checkHorizontalWin(pieceType);
     }
 }

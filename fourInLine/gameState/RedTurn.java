@@ -1,15 +1,15 @@
 package fourInLine.gameState;
 
-import fourInLine.Line;
+import fourInLine.Game;
 
 public class RedTurn extends GameState {
-    public RedTurn(Line game) {
+    public RedTurn(Game game) {
         super(game);
     }
 
     @Override
     public void playRed(int column) {
-        game.playPiece(column, Line.getRedPiece());
+        game.playPiece(column, Game.getRedPiece());
         game.setState(getNextState());
     }
 
