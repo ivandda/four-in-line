@@ -8,7 +8,12 @@ public class PlayGame {
 
         Game game = new Game(promptAsInt("Base? "),
                 promptAsInt("Height? "),
-                promptAsChar("Game Mode: A, B o C? "));
+                promptAsChar("""
+                        - A: Win with four Horizontal or Vertical pieces\s
+                        - B: Win with four Diagonal pieces\s
+                        - C: Win with four Horizontal, Vertical or Diagonal pieces
+                         Game Mode: A, B o C? \s
+                        """));
 
         System.out.println(game.show());
 
